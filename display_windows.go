@@ -1,6 +1,7 @@
 package display
 
 import (
+	"github.com/knobik/go-display/internal/util"
 	win "github.com/lxn/win"
 	"syscall"
 	"unsafe"
@@ -20,12 +21,12 @@ func NumActiveDisplays() int {
 	return count
 }
 
-func GetDisplayBounds(displayIndex int) Bounds {
+func GetDisplayBounds(displayIndex int) util.Bounds {
 	var ctx getMonitorBoundsContext
 	ctx.Index = displayIndex
 	ctx.Count = 0
 	enumDisplayMonitors(win.HDC(0), nil, syscall.NewCallback(getMonitorBoundsCallback), uintptr(unsafe.Pointer(&ctx)))
-	return MakeBounds(
+	return util.MakeBounds(
 		int(ctx.Rect.Left), int(ctx.Rect.Top),
 		int(ctx.Rect.Right), int(ctx.Rect.Bottom))
 }

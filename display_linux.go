@@ -1,6 +1,7 @@
 package display
 
 import (
+	"github.com/knobik/go-display/internal/util"
 	"github.com/knobik/go-display/internal/xwindow"
 )
 
@@ -11,6 +12,6 @@ func NumActiveDisplays() int {
 
 // GetDisplayBounds returns the bounds of displayIndex'th display.
 // The main display is displayIndex = 0.
-func GetDisplayBounds(displayIndex int) Bounds {
+func GetDisplayBounds(displayIndex int) util.Bounds {
 	return xwindow.GetDisplayBounds(displayIndex)
 }

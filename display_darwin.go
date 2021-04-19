@@ -25,6 +25,7 @@ void CompatCGContextDrawImage(CGContextRef c, CGRect rect, void* image) {
 import "C"
 
 import (
+	"github.com/knobik/go-display/internal/util"
 	"unsafe"
 )
 
@@ -37,11 +38,11 @@ func NumActiveDisplays() int {
 	}
 }
 
-func GetDisplayBounds(displayIndex int) Bounds {
+func GetDisplayBounds(displayIndex int) util.Bounds {
 	id := getDisplayId(displayIndex)
 	main := C.CGMainDisplayID()
 
-	var rect Bounds
+	var rect util.Bounds
 
 	bounds := getCoreGraphicsCoordinateOfDisplay(id)
 	rect.Left = int(bounds.origin.x)

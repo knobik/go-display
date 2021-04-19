@@ -3,7 +3,7 @@ package xwindow
 import (
 	"github.com/BurntSushi/xgb"
 	"github.com/BurntSushi/xgb/xinerama"
-	"github.com/knobik/go-display"
+	"github.com/knobik/go-display/internal/util"
 )
 
 func NumActiveDisplays() (num int) {
@@ -34,32 +34,32 @@ func NumActiveDisplays() (num int) {
 	return num
 }
 
-func GetDisplayBounds(displayIndex int) (rect display.Bounds) {
+func GetDisplayBounds(displayIndex int) (rect util.Bounds) {
 	defer func() {
 		e := recover()
 		if e != nil {
-			rect = display.Bounds{}
+			rect = util.Bounds{}
 		}
 	}()
 
 	c, err := xgb.NewConn()
 	if err != nil {
-		return display.Bounds{}
+		return util.Bounds{}
 	}
 	defer c.Close()
 
 	err = xinerama.Init(c)
 	if err != nil {
-		return display.Bounds{}
+		return util.Bounds{}
 	}
 
 	reply, err := xinerama.QueryScreens(c).Reply()
 	if err != nil {
-		return display.Bounds{}
+		return util.Bounds{}
 	}
 
 	if displayIndex >= int(reply.Number) {
-		return display.Bounds{}
+		return util.Bounds{}
 	}
 
 	primary := reply.ScreenInfo[0]
@@ -71,6 +71,6 @@ func GetDisplayBounds(displayIndex int) (rect display.Bounds) {
 	y := int(screen.YOrg) - y0
 	w := int(screen.Width)
 	h := int(screen.Height)
-	rect = display.MakeBounds(x, y, x+w, y+h)
+	rect = util.MakeBounds(x, y, x+w, y+h)
 	return rect
 }
