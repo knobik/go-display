@@ -1,0 +1,1 @@
+Based on awesome [go screenshot](https://github.com/kbinani/screenshot) package by [kbinani](https://github.com/kbinani)
